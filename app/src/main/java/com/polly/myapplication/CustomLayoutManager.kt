@@ -38,8 +38,9 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
 
-        var firstVisiblePosition = horizontalScrollOffset / (viewSpacing + viewWidth)
-        var lastVisiblePosition = firstVisiblePosition + 3
+        val viewWidthWithSpacing = viewSpacing + viewWidth
+        var firstVisiblePosition = horizontalScrollOffset / viewWidthWithSpacing
+        var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidthWithSpacing
         if (firstVisiblePosition < 0) {
             firstVisiblePosition = 0
         }
@@ -51,7 +52,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
             val view = recycler.getViewForPosition(i)
             addView(view)
 
-            val left = i * (viewSpacing + viewWidth) - horizontalScrollOffset
+            val left = i * viewWidthWithSpacing - horizontalScrollOffset
             val right = left + viewWidth
             val top = viewSpacing + getTopOffsetForView((left + right) /2)
             val bottom = top + viewWidth
