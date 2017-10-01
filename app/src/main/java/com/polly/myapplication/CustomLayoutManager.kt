@@ -16,7 +16,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
     val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
     val viewSpacing = context.resources.getDimensionPixelSize(R.dimen.item_spacing)
-    val moduleHeight = context.resources.getDimensionPixelSize(R.dimen.module_height)
+    val recyclerViewHeight = context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
@@ -48,7 +48,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
             val left = i * viewWidthWithSpacing - horizontalScrollOffset
             val right = left + viewWidth
-            val bottom = moduleHeight - getRadialOffsetForView((left+right) / 2)
+            val bottom = recyclerViewHeight - (getRadialOffsetForView((left+right) / 2))
             val top = bottom - viewWidth
 
             measureChildWithMargins(view, viewWidth, viewWidth)
@@ -62,7 +62,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun getRadialOffsetForView(viewCentreX: Int): Int {
         val xScreenFraction = viewCentreX.toFloat() / screenWidth.toFloat()
         val alpha = (xScreenFraction * Math.PI)
-        val yComponent = (screenWidth / 2) * Math.sin(alpha)
+        val yComponent = (recyclerViewHeight / 2) * Math.sin(alpha)
         return yComponent.toInt()
     }
 

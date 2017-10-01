@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="module_height">300dp</dimen>
+    <dimen name="recyclerview_height">200dp</dimen>
     <dimen name="item_width">100dp</dimen>
     <dimen name="item_spacing">10dp</dimen>
 </resources>
