@@ -6,24 +6,23 @@ import android.util.TypedValue
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.R.attr.y
+import android.R.attr.x
+import android.view.Display
+
+
 
 
 /**
  * Created by polly on 01/10/17.
  */
-class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
+class CustomLayoutManager(val context: Context, val screenWidth: Int) : RecyclerView.LayoutManager() {
 
     private val TAG = "CustomLayoutManager"
     var horizontalScrollOffset = 0
 
-    val viewWidth = dipToPixels(context, 120)
-    val viewSpacing = dipToPixels(context, 0)
-
-    fun dipToPixels(context: Context, dipValue: Int): Int{
-        val displayMetrics = context.getResources().getDisplayMetrics()
-        val floatPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue.toFloat(), displayMetrics)
-        return floatPx.toInt()
-    }
+    val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
+    val viewSpacing = context.resources.getDimensionPixelSize(R.dimen.item_spacing)
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
@@ -39,7 +38,6 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
 
-        //todo find first visible position
         var firstVisiblePosition = horizontalScrollOffset / (viewSpacing + viewWidth)
         var lastVisiblePosition = firstVisiblePosition + 3
         if (firstVisiblePosition < 0) {
@@ -55,7 +53,7 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
 
             val left = i * (viewSpacing + viewWidth) - horizontalScrollOffset
             val right = left + viewWidth
-            val top = viewSpacing
+            val top = viewSpacing + getTopOffsetForView((left + right) /2)
             val bottom = top + viewWidth
 
             measureChildWithMargins(view, viewWidth, viewWidth)
@@ -64,6 +62,10 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
 
 //            logBounds(view, "$i")
         }
+    }
+
+    private fun getTopOffsetForView(viewCentreX: Int): Int {
+        return Math.abs(screenWidth/2 - viewCentreX)
     }
 
     override fun canScrollHorizontally(): Boolean {

@@ -1,5 +1,6 @@
 package com.polly.myapplication
 
+import android.graphics.Point
 import android.graphics.Rect
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat")
+        val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat", "wolfberry", "dangleberry", "bumfruit")
 
         val recyclerview: RecyclerView = findViewById(R.id.recyclerview) as RecyclerView
         recyclerview.adapter = ThingAdapter(thingsList)
@@ -32,7 +33,12 @@ class MainActivity : AppCompatActivity() {
 //        })
 
 //        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerview.layoutManager = CustomLayoutManager(this)
+
+        val display = getWindowManager().getDefaultDisplay()
+        val size = Point()
+        display.getSize(size)
+        val screenWidth = size.x
+        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
     }
 }
 
