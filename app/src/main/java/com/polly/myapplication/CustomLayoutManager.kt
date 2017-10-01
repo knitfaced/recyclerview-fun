@@ -2,15 +2,8 @@ package com.polly.myapplication
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.TypedValue
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.R.attr.y
-import android.R.attr.x
-import android.view.Display
-
-
 
 
 /**
@@ -23,6 +16,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
     val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
     val viewSpacing = context.resources.getDimensionPixelSize(R.dimen.item_spacing)
+    val moduleHeight = context.resources.getDimensionPixelSize(R.dimen.module_height)
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
@@ -54,8 +48,8 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
             val left = i * viewWidthWithSpacing - horizontalScrollOffset
             val right = left + viewWidth
-            val top = viewSpacing + getTopOffsetForView((left + right) /2)
-            val bottom = top + viewWidth
+            val bottom = moduleHeight - getRadialOffsetForView((left+right) / 2)
+            val top = bottom - viewWidth
 
             measureChildWithMargins(view, viewWidth, viewWidth)
 
@@ -65,8 +59,11 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
         }
     }
 
-    private fun getTopOffsetForView(viewCentreX: Int): Int {
-        return Math.abs(screenWidth/2 - viewCentreX)
+    private fun getRadialOffsetForView(viewCentreX: Int): Int {
+        val xScreenFraction = viewCentreX.toFloat() / screenWidth.toFloat()
+        val alpha = (xScreenFraction * Math.PI)
+        val yComponent = (screenWidth / 2) * Math.sin(alpha)
+        return yComponent.toInt()
     }
 
     override fun canScrollHorizontally(): Boolean {
