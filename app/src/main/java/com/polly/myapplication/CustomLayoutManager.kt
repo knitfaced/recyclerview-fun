@@ -66,7 +66,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun getRadialOffsetForView(viewCentreX: Int): Int {
         val xScreenFraction = viewCentreX.toFloat() / screenWidth.toFloat()
         val alpha = (xScreenFraction * Math.PI)
-        val yComponent = (recyclerViewHeight / 2) * Math.sin(alpha)
+        val yComponent = Math.abs(recyclerViewHeight - viewWidth) * Math.sin(alpha)
         return yComponent.toInt()
     }
 
