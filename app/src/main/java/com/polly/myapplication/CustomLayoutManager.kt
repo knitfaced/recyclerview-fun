@@ -31,26 +31,7 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
     }
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-//        detachAndScrapAttachedViews(recycler)
-//
-//        Log.d(TAG, "itemCount $itemCount")
-//
-//        val childView = recycler.getViewForPosition(0)
-//
-//        logBounds(childView)
-//
-//        Log.d(TAG, "itemCount $itemCount")
-//        addView(childView)
-//
-//        logBounds(childView)
-//
-//        measureChild(childView, 300, 300)
-//
-//        logBounds(childView)
-//
-//        layoutDecorated(childView, 200, 200, 500, 500)
-//
-//        logBounds(childView)
+        detachAndScrapAttachedViews(recycler)
 
         for (i in 0..3) {
             val view = recycler.getViewForPosition(i)
@@ -66,8 +47,7 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
             val top = viewSpacing
             val bottom = top + viewWidth
 
-
-            measureChild(view, viewWidth, viewWidth)
+            measureChildWithMargins(view, viewWidth, viewWidth)
 
             layoutDecorated(view, left, top, right, bottom)
 

@@ -1,5 +1,6 @@
 package com.polly.myapplication
 
+import android.graphics.Rect
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -18,6 +19,18 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerview: RecyclerView = findViewById(R.id.recyclerview) as RecyclerView
         recyclerview.adapter = ThingAdapter(thingsList)
+
+//showing off
+//        recyclerview.addItemDecoration(object: RecyclerView.ItemDecoration() {
+//            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+//                val offset = 50
+//                outRect.top = offset
+//                outRect.bottom = offset
+//                outRect.left = offset
+//                outRect.right = offset
+//            }
+//        })
+
 //        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerview.layoutManager = CustomLayoutManager(this)
     }
