@@ -14,6 +14,10 @@ import android.view.View
 class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
 
     private val TAG = "CustomLayoutManager"
+    var horizontalScrollOffset = 0
+
+    val viewWidth = dipToPixels(context, 120)
+    val viewSpacing = dipToPixels(context, 0)
 
     fun dipToPixels(context: Context, dipValue: Int): Int{
         val displayMetrics = context.getResources().getDisplayMetrics()
@@ -26,23 +30,30 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        fill(recycler, state)
+//        Log.d(TAG, "viewWidth = $viewWidth")
+//        Log.d(TAG, "viewSpacing = $viewSpacing")
 
+        fill(recycler, state)
     }
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
 
-        for (i in 0..3) {
+        //todo find first visible position
+        var firstVisiblePosition = horizontalScrollOffset / (viewSpacing + viewWidth)
+        var lastVisiblePosition = firstVisiblePosition + 3
+        if (firstVisiblePosition < 0) {
+            firstVisiblePosition = 0
+        }
+        if (lastVisiblePosition >= itemCount) {
+            lastVisiblePosition = itemCount -1
+        }
+
+        for (i in firstVisiblePosition..lastVisiblePosition) {
             val view = recycler.getViewForPosition(i)
             addView(view)
 
-            val viewWidth = dipToPixels(context, 120)
-            val viewSpacing = dipToPixels(context, 0)
-
-            Log.d(TAG, "viewWidth = $viewWidth")
-            Log.d(TAG, "viewSpacing = $viewSpacing")
-            val left = i * (viewSpacing + viewWidth)
+            val left = i * (viewSpacing + viewWidth) - horizontalScrollOffset
             val right = left + viewWidth
             val top = viewSpacing
             val bottom = top + viewWidth
@@ -51,8 +62,18 @@ class CustomLayoutManager(val context: Context) : RecyclerView.LayoutManager() {
 
             layoutDecorated(view, left, top, right, bottom)
 
-            logBounds(view, "$i")
+//            logBounds(view, "$i")
         }
+    }
+
+    override fun canScrollHorizontally(): Boolean {
+        return true
+    }
+
+    override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
+        horizontalScrollOffset += dx
+        fill(recycler, state)
+        return dx
     }
 
     private fun logBounds(childView: View, msg: String) {
