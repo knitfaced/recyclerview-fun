@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/recyclerview_height"
     android:id="@+id/recyclerview"
-    android:background="#bbb"
+    android:background="#eee"
     />
 

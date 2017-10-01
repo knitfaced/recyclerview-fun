@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:layout_width="@dimen/item_width"
     android:layout_height="@dimen/item_width"
-    android:background="#fff"
     android:gravity="center"
     >
 
@@ -12,7 +11,7 @@
         android:layout_margin="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#cba"
+        android:background="@drawable/circle"
         android:gravity="center"
         />
 </LinearLayout>
