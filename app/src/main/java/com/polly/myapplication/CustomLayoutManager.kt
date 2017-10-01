@@ -56,6 +56,10 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
             layoutDecorated(view, left, top, right, bottom)
 
 //            logBounds(view, "$i")
+
+        }
+        recycler.scrapList.forEach {
+            recycler.recycleView(it.itemView)
         }
     }
 
