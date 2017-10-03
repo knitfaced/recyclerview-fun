@@ -42,18 +42,18 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
             lastVisiblePosition = itemCount -1
         }
 
+        if (horizontalScrollOffset < 0) {
+            //fill from left
+            val view = recycler.getViewForPosition(itemCount - 1)
+            addView(view)
+            layoutChildView(-1, viewWidthWithSpacing, view)
+        }
+
         for (i in firstVisiblePosition..lastVisiblePosition) {
             val view = recycler.getViewForPosition(i)
             addView(view)
 
-            val left = i * viewWidthWithSpacing - horizontalScrollOffset
-            val right = left + viewWidth
-            val bottom = recyclerViewHeight - (getRadialOffsetForView((left+right) / 2))
-            val top = bottom - viewWidth
-
-            measureChildWithMargins(view, viewWidth, viewWidth)
-
-            layoutDecorated(view, left, top, right, bottom)
+            layoutChildView(i, viewWidthWithSpacing, view)
 
 //            logBounds(view, "$i")
 
@@ -61,6 +61,17 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
         recycler.scrapList.forEach {
             recycler.recycleView(it.itemView)
         }
+    }
+
+    private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View?) {
+        val left = i * viewWidthWithSpacing - horizontalScrollOffset
+        val right = left + viewWidth
+        val bottom = recyclerViewHeight - (getRadialOffsetForView((left + right) / 2))
+        val top = bottom - viewWidth
+
+        measureChildWithMargins(view, viewWidth, viewWidth)
+
+        layoutDecorated(view, left, top, right, bottom)
     }
 
     private fun getRadialOffsetForView(viewCentreX: Int): Int {
