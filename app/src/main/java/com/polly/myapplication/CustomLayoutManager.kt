@@ -23,9 +23,6 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-//        Log.d(TAG, "viewWidth = $viewWidth")
-//        Log.d(TAG, "viewSpacing = $viewSpacing")
-
         fill(recycler, state)
     }
 
@@ -33,37 +30,25 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
         detachAndScrapAttachedViews(recycler)
 
         val viewWidthWithSpacing = viewSpacing + viewWidth
-        var firstVisiblePosition = horizontalScrollOffset / viewWidthWithSpacing
+        var firstVisiblePosition = Math.floor(horizontalScrollOffset.toDouble() / viewWidthWithSpacing.toDouble()).toInt()
         var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidthWithSpacing
-        if (firstVisiblePosition < 0) {
-            firstVisiblePosition = 0
-        }
-        if (lastVisiblePosition >= itemCount) {
-            lastVisiblePosition = itemCount -1
-        }
 
-        if (horizontalScrollOffset < 0) {
-            //fill from left
-            val view = recycler.getViewForPosition(itemCount - 1)
-            addView(view)
-            layoutChildView(-1, viewWidthWithSpacing, view)
-        }
-
-        for (i in firstVisiblePosition..lastVisiblePosition) {
-            val view = recycler.getViewForPosition(i)
+        for (index in firstVisiblePosition..lastVisiblePosition) {
+            var recyclerIndex = index % itemCount
+            if (recyclerIndex < 0) {
+                recyclerIndex += itemCount
+            }
+            val view = recycler.getViewForPosition(recyclerIndex)
             addView(view)
 
-            layoutChildView(i, viewWidthWithSpacing, view)
-
-//            logBounds(view, "$i")
-
+            layoutChildView(index, viewWidthWithSpacing, view)
         }
         recycler.scrapList.forEach {
             recycler.recycleView(it.itemView)
         }
     }
 
-    private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View?) {
+    private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View) {
         val left = i * viewWidthWithSpacing - horizontalScrollOffset
         val right = left + viewWidth
         val bottom = recyclerViewHeight - (getRadialOffsetForView((left + right) / 2))
@@ -89,12 +74,5 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
         horizontalScrollOffset += dx
         fill(recycler, state)
         return dx
-    }
-
-    private fun logBounds(childView: View, msg: String) {
-        Log.d(TAG, "$msg view top ${getDecoratedTop(childView)}")
-        Log.d(TAG, "$msg view bottom ${getDecoratedBottom(childView)}")
-        Log.d(TAG, "$msg view left ${getDecoratedLeft(childView)}")
-        Log.d(TAG, "$msg view right ${getDecoratedRight(childView)}")
     }
 }
