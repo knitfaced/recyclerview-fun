@@ -16,7 +16,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
     val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
     val viewSpacing = context.resources.getDimensionPixelSize(R.dimen.item_spacing)
-    val recyclerViewHeight = context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)
+    val recyclerViewHeight = (context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
@@ -51,7 +51,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View) {
         val left = i * viewWidthWithSpacing - horizontalScrollOffset
         val right = left + viewWidth
-        val bottom = recyclerViewHeight - (getRadialOffsetForView((left + right) / 2))
+        val bottom = getRadialOffsetForView((left + right) / 2)
         val top = bottom - viewWidth
 
         measureChildWithMargins(view, viewWidth, viewWidth)
@@ -60,10 +60,15 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     }
 
     private fun getRadialOffsetForView(viewCentreX: Int): Int {
-        val xScreenFraction = viewCentreX.toFloat() / screenWidth.toFloat()
-        val alpha = (xScreenFraction * Math.PI)
-        val yComponent = Math.abs(recyclerViewHeight - viewWidth) * Math.sin(alpha)
-        return yComponent.toInt()
+        val s: Double = screenWidth.toDouble() / 2
+        val radius: Double = ((recyclerViewHeight * recyclerViewHeight) + (s * s)) / (recyclerViewHeight * 2)
+
+        val xScreenFraction = viewCentreX.toDouble() / screenWidth.toDouble()
+        val beta = Math.acos(s / radius)
+
+        val alpha = beta + (xScreenFraction * (Math.PI - (2 * beta)))
+        val yComponent = radius - (radius * Math.sin(alpha))
+        return yComponent.toInt() + viewWidth/2
     }
 
     override fun canScrollHorizontally(): Boolean {

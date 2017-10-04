@@ -2,5 +2,5 @@
 <resources>
     <dimen name="recyclerview_height">200dp</dimen>
     <dimen name="item_width">100dp</dimen>
-    <dimen name="item_spacing">5dp</dimen>
+    <dimen name="item_spacing">0dp</dimen>
 </resources>
