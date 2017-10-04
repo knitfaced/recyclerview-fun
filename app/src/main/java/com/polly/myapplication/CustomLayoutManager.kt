@@ -61,14 +61,15 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
     private fun getRadialOffsetForView(viewCentreX: Int): Int {
         val s: Double = screenWidth.toDouble() / 2
-        val radius: Double = ((recyclerViewHeight * recyclerViewHeight) + (s * s)) / (recyclerViewHeight * 2)
+        val h = recyclerViewHeight - viewWidth.toDouble()
+        val radius: Double = ((h * h) + (s * s)) / (h * 2)
 
         val xScreenFraction = viewCentreX.toDouble() / screenWidth.toDouble()
         val beta = Math.acos(s / radius)
 
         val alpha = beta + (xScreenFraction * (Math.PI - (2 * beta)))
         val yComponent = radius - (radius * Math.sin(alpha))
-        return yComponent.toInt() + viewWidth/2
+        return yComponent.toInt() + viewWidth
     }
 
     override fun canScrollHorizontally(): Boolean {
