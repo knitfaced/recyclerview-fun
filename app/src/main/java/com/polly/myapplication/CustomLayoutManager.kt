@@ -43,7 +43,8 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
 
             layoutChildView(index, viewWidthWithSpacing, view)
         }
-        recycler.scrapList.forEach {
+        val scrapListCopy = recycler.scrapList.toList()
+        scrapListCopy.forEach {
             recycler.recycleView(it.itemView)
         }
     }
