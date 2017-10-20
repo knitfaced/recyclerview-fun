@@ -1,9 +1,8 @@
 package com.polly.myapplication
 
 import android.graphics.Point
-import android.graphics.Rect
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -21,24 +20,16 @@ class MainActivity : AppCompatActivity() {
         val recyclerview: RecyclerView = findViewById(R.id.recyclerview) as RecyclerView
         recyclerview.adapter = ThingAdapter(thingsList)
 
-//showing off
-//        recyclerview.addItemDecoration(object: RecyclerView.ItemDecoration() {
-//            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-//                val offset = 50
-//                outRect.top = offset
-//                outRect.bottom = offset
-//                outRect.left = offset
-//                outRect.right = offset
-//            }
-//        })
-
-//        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
         val display = getWindowManager().getDefaultDisplay()
         val size = Point()
         display.getSize(size)
         val screenWidth = size.x
+
+        val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
+
+        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
+//        recyclerview.layoutManager = CustomLayoutManager4(screenWidth, viewWidth)
     }
 }
 

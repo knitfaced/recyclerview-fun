@@ -4,6 +4,7 @@
     android:layout_width="@dimen/item_width"
     android:layout_height="@dimen/item_width"
     android:gravity="center"
+    android:padding="10dp"
     >
 
     <TextView
