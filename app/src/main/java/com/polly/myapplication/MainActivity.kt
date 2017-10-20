@@ -26,10 +26,11 @@ class MainActivity : AppCompatActivity() {
         val screenWidth = size.x
 
         val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
+        recyclerview.layoutParams.height = screenWidth / 2
 
         recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
-//        recyclerview.layoutManager = CustomLayoutManager4(screenWidth, viewWidth)
+//        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
+        recyclerview.layoutManager = CustomLayoutManager5(screenWidth, viewWidth)
     }
 }
 
