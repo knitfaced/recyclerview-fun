@@ -15,7 +15,6 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     var horizontalScrollOffset = 0
 
     val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
-    val viewSpacing = context.resources.getDimensionPixelSize(R.dimen.item_spacing)
     val recyclerViewHeight = (context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
@@ -29,9 +28,8 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
 
-        val viewWidthWithSpacing = viewSpacing + viewWidth
-        var firstVisiblePosition = Math.floor(horizontalScrollOffset.toDouble() / viewWidthWithSpacing.toDouble()).toInt()
-        var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidthWithSpacing
+        var firstVisiblePosition = Math.floor(horizontalScrollOffset.toDouble() / viewWidth.toDouble()).toInt()
+        var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidth
 
         for (index in firstVisiblePosition..lastVisiblePosition) {
             var recyclerIndex = index % itemCount
@@ -41,7 +39,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
             val view = recycler.getViewForPosition(recyclerIndex)
             addView(view)
 
-            layoutChildView(index, viewWidthWithSpacing, view)
+            layoutChildView(index, viewWidth, view)
         }
         val scrapListCopy = recycler.scrapList.toList()
         scrapListCopy.forEach {
@@ -52,25 +50,25 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View) {
         val left = i * viewWidthWithSpacing - horizontalScrollOffset
         val right = left + viewWidth
-        val bottom = getRadialOffsetForView((left + right) / 2)
-        val top = bottom - viewWidth
+        val top = getTopOffsetForView(left + viewWidth/2)
+        val bottom = top + viewWidth
 
-        measureChildWithMargins(view, viewWidth, viewWidth)
+        measureChild(view, viewWidth, viewWidth)
 
         layoutDecorated(view, left, top, right, bottom)
     }
 
-    private fun getRadialOffsetForView(viewCentreX: Int): Int {
+    private fun getTopOffsetForView(viewCentreX: Int): Int {
         val s: Double = screenWidth.toDouble() / 2
-        val h = recyclerViewHeight - viewWidth.toDouble()
-        val radius: Double = ((h * h) + (s * s)) / (h * 2)
+        val h: Double = recyclerViewHeight - viewWidth.toDouble()
+        val radius: Double = ( h*h + s*s ) / (h*2)
 
         val xScreenFraction = viewCentreX.toDouble() / screenWidth.toDouble()
         val beta = Math.acos(s / radius)
 
         val alpha = beta + (xScreenFraction * (Math.PI - (2 * beta)))
         val yComponent = radius - (radius * Math.sin(alpha))
-        return yComponent.toInt() + viewWidth
+        return yComponent.toInt()
     }
 
     override fun canScrollHorizontally(): Boolean {
