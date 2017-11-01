@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat", "wolfberry", "dangleberry", "bumfruit")
+        val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat", "wolfberry", "dragonfruit")
 
         val recyclerview: RecyclerView = findViewById(R.id.recyclerview) as RecyclerView
         recyclerview.adapter = ThingAdapter(thingsList)
@@ -28,9 +28,8 @@ class MainActivity : AppCompatActivity() {
         val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
         recyclerview.layoutParams.height = screenWidth / 2
 
-        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-//        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
-        recyclerview.layoutManager = CustomLayoutManager5(screenWidth, viewWidth)
+//        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
     }
 }
 
