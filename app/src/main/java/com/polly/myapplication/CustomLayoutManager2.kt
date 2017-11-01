@@ -19,7 +19,7 @@ class CustomLayoutManager2 : RecyclerView.LayoutManager() {
         val top = 0
         val bottom = top + viewWidth
 
-        measureChildWithMargins(view, viewWidth, viewWidth)
+        measureChild(view, viewWidth, viewWidth)
 
         layoutDecorated(view, left, top, right, bottom)
     }

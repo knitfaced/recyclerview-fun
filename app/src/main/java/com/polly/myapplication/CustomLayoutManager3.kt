@@ -21,7 +21,7 @@ class CustomLayoutManager3 : RecyclerView.LayoutManager() {
 
             measureChildWithMargins(view, viewWidth, viewWidth)
 
-            layoutDecorated(view, left, top, right, bottom)
+            layoutDecoratedWithMargins(view, left, top, right, bottom)
         }
     }
 }

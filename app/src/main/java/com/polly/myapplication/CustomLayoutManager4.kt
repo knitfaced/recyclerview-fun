@@ -48,7 +48,7 @@ class CustomLayoutManager4(val screenWidth: Int, val viewWidth: Int) : RecyclerV
 
             measureChildWithMargins(view, viewWidth, viewWidth)
 
-            layoutDecorated(view, left, top, right, bottom)
+            layoutDecoratedWithMargins(view, left, top, right, bottom)
         }
         val scrapListCopy = recycler.scrapList.toList()
         scrapListCopy.forEach {
