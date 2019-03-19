@@ -2,9 +2,8 @@ package com.polly.myapplication
 
 import android.graphics.Point
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat", "wolfberry", "dragonfruit")
 
-        val recyclerview: RecyclerView = findViewById(R.id.recyclerview) as RecyclerView
+        val recyclerview: androidx.recyclerview.widget.RecyclerView = findViewById(R.id.recyclerview) as androidx.recyclerview.widget.RecyclerView
         recyclerview.adapter = ThingAdapter(thingsList)
 
-        val display = getWindowManager().getDefaultDisplay()
         val size = Point()
-        display.getSize(size)
+        windowManager.defaultDisplay.getSize(size)
         val screenWidth = size.x
 
         val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
@@ -33,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class ThingAdapter(private val thingsList: List<String>) : RecyclerView.Adapter<ThingHolder>() {
+class ThingAdapter(private val thingsList: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<ThingHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThingHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return ThingHolder(itemView)
@@ -49,7 +47,7 @@ class ThingAdapter(private val thingsList: List<String>) : RecyclerView.Adapter<
 
 }
 
-class ThingHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ThingHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     val textView: TextView = itemView.findViewById(R.id.text) as TextView
 
 }

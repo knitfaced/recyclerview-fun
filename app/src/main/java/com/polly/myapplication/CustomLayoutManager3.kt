@@ -1,14 +1,14 @@
 package com.polly.myapplication
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 
-class CustomLayoutManager3 : RecyclerView.LayoutManager() {
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        return RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+class CustomLayoutManager3 : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
+    override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
+        return androidx.recyclerview.widget.RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    override fun onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
         val viewWidth = 300
         for (i in 0..3) {
             val left = i * viewWidth

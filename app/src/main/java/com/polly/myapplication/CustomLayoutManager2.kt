@@ -1,14 +1,14 @@
 package com.polly.myapplication
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
-class CustomLayoutManager2 : RecyclerView.LayoutManager() {
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        return RecyclerView.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+class CustomLayoutManager2 : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
+    override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
+        return androidx.recyclerview.widget.RecyclerView.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    override fun onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
         val view = recycler.getViewForPosition(0)
         addView(view)
 

@@ -1,7 +1,7 @@
 package com.polly.myapplication
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
 
@@ -9,7 +9,7 @@ import android.view.View
 /**
  * Created by polly on 01/10/17.
  */
-class CustomLayoutManager(val context: Context, val screenWidth: Int) : RecyclerView.LayoutManager() {
+class CustomLayoutManager(val context: Context, val screenWidth: Int) : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
 
     private val TAG = "CustomLayoutManager"
     var horizontalScrollOffset = 0
@@ -17,15 +17,15 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
     val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
     val recyclerViewHeight = (context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
 
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        return RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+    override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
+        return androidx.recyclerview.widget.RecyclerView.LayoutParams(androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT, androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    override fun onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
         fill(recycler, state)
     }
 
-    private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    private fun fill(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
 
         val firstVisiblePosition = Math.floor(horizontalScrollOffset.toDouble() / viewWidth.toDouble()).toInt()
@@ -75,7 +75,7 @@ class CustomLayoutManager(val context: Context, val screenWidth: Int) : Recycler
         return true
     }
 
-    override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
+    override fun scrollHorizontallyBy(dx: Int, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): Int {
         horizontalScrollOffset += dx
         fill(recycler, state)
         return dx
