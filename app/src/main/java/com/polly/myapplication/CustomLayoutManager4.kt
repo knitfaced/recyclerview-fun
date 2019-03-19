@@ -1,31 +1,29 @@
 package com.polly.myapplication
 
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.content.res.Resources
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import androidx.recyclerview.widget.RecyclerView.*
 
-class CustomLayoutManager4(val screenWidth: Int, val viewWidth: Int) : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
+class CustomLayoutManager4(resources: Resources, private val screenWidth: Int) : LayoutManager() {
 
     private var horizontalScrollOffset: Int = 0
+    private val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
 
-    override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
-        return androidx.recyclerview.widget.RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
+    override fun generateDefaultLayoutParams(): LayoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-    override fun canScrollHorizontally(): Boolean {
-        return true
-    }
+    override fun canScrollHorizontally(): Boolean = true
 
-    override fun scrollHorizontallyBy(dx: Int, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): Int {
+    override fun scrollHorizontallyBy(dx: Int, recycler: Recycler, state: State): Int {
         horizontalScrollOffset += dx
         fill(recycler, state)
         return dx
     }
 
-    override fun onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
+    override fun onLayoutChildren(recycler: Recycler, state: State) {
         fill(recycler, state)
     }
 
-    private fun fill(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State) {
+    private fun fill(recycler: Recycler, state: State) {
         detachAndScrapAttachedViews(recycler)
 
         var firstVisiblePosition = horizontalScrollOffset / viewWidth
