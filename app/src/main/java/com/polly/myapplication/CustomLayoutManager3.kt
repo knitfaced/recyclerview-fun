@@ -4,7 +4,9 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView.*
 
 class CustomLayoutManager3 : LayoutManager() {
-    override fun generateDefaultLayoutParams(): LayoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+
+    override fun generateDefaultLayoutParams(): LayoutParams
+            = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
     override fun onLayoutChildren(recycler: Recycler, state: State) {
         val viewWidth = 300
@@ -17,9 +19,9 @@ class CustomLayoutManager3 : LayoutManager() {
             val view = recycler.getViewForPosition(i)
             addView(view)
 
-            measureChildWithMargins(view, viewWidth, viewWidth)
+            measureChild(view, viewWidth, viewWidth)
 
-            layoutDecoratedWithMargins(view, left, top, right, bottom)
+            layoutDecorated(view, left, top, right, bottom)
         }
     }
 }
