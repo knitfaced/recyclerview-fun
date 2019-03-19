@@ -1,7 +1,7 @@
 package com.polly.myapplication
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 class CustomLayoutManager3 : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
     override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {

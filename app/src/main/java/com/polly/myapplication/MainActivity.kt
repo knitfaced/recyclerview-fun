@@ -16,18 +16,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val thingsList : List<String> = listOf("banana", "apple", "pear", "strawberry", "cherry", "plum", "orange", "kiwi", "kumquat", "wolfberry", "dragonfruit")
 
-        val recyclerview: androidx.recyclerview.widget.RecyclerView = findViewById(R.id.recyclerview) as androidx.recyclerview.widget.RecyclerView
-        recyclerview.adapter = ThingAdapter(thingsList)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerview)
+        recyclerView.adapter = ThingAdapter(thingsList)
 
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         val screenWidth = size.x
 
-        val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
-        recyclerview.layoutParams.height = screenWidth / 2
+        recyclerView.layoutParams.height = screenWidth / 2
 
+        //This is how you would usually set up a LinearLayoutManager
 //        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerview.layoutManager = CustomLayoutManager(this, screenWidth)
+
+        //This is using our CustomLayoutManager.
+        //Try changing between CustomLayoutManager1, CustomLayoutManager2 etc. to see the differences
+        recyclerView.layoutManager = CustomLayoutManager(this, screenWidth)
     }
 }
 
@@ -49,5 +52,4 @@ class ThingAdapter(private val thingsList: List<String>) : androidx.recyclerview
 
 class ThingHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     val textView: TextView = itemView.findViewById(R.id.text) as TextView
-
 }

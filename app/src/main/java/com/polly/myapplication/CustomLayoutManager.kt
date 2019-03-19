@@ -6,16 +6,13 @@ import android.util.Log
 import android.view.View
 
 
-/**
- * Created by polly on 01/10/17.
- */
-class CustomLayoutManager(val context: Context, val screenWidth: Int) : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
+class CustomLayoutManager(context: Context, private val screenWidth: Int) : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
 
     private val TAG = "CustomLayoutManager"
-    var horizontalScrollOffset = 0
+    private var horizontalScrollOffset = 0
 
-    val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
-    val recyclerViewHeight = (context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
+    private val viewWidth = context.resources.getDimensionPixelSize(R.dimen.item_width)
+    private val recyclerViewHeight = (context.resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
 
     override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
         return androidx.recyclerview.widget.RecyclerView.LayoutParams(androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT, androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT)

@@ -1,7 +1,7 @@
 package com.polly.myapplication
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import java.lang.Math.PI
 
 class CustomLayoutManager5(val screenWidth: Int, val viewWidth: Int) : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
