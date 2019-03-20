@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         //This is using our CustomLayoutManager.
         //Try changing between CustomLayoutManager1, CustomLayoutManager2 etc. to see the differences
-        recyclerView.layoutManager = CustomLayoutManager3()
+        recyclerView.layoutManager = CustomLayoutManager(resources, screenWidth)
     }
 }
 

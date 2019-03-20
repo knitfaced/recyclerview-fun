@@ -28,12 +28,9 @@ class CustomLayoutManager4(resources: Resources, private val screenWidth: Int) :
 
         var firstVisiblePosition = horizontalScrollOffset / viewWidth
         var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidth
-        if (firstVisiblePosition < 0) {
-            firstVisiblePosition = 0
-        }
-        if (lastVisiblePosition >= itemCount) {
-            lastVisiblePosition = itemCount -1
-        }
+
+        firstVisiblePosition = if (firstVisiblePosition < 0) 0 else firstVisiblePosition
+        lastVisiblePosition = if (lastVisiblePosition >= itemCount) itemCount-1 else lastVisiblePosition
 
         for (i in firstVisiblePosition..lastVisiblePosition) {
             val left = i * viewWidth - horizontalScrollOffset
