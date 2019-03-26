@@ -15,24 +15,18 @@ class CustomLayoutManager4(resources: Resources, private val screenWidth: Int) :
 
     override fun scrollHorizontallyBy(dx: Int, recycler: Recycler, state: State): Int {
         horizontalScrollOffset += dx
-        fill(recycler, state)
+        fill(recycler)
         return dx
     }
 
     override fun onLayoutChildren(recycler: Recycler, state: State) {
-        fill(recycler, state)
+        fill(recycler)
     }
 
-    private fun fill(recycler: Recycler, state: State) {
+    private fun fill(recycler: Recycler) {
         detachAndScrapAttachedViews(recycler)
 
-        var firstVisiblePosition = horizontalScrollOffset / viewWidth
-        var lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidth
-
-        firstVisiblePosition = if (firstVisiblePosition < 0) 0 else firstVisiblePosition
-        lastVisiblePosition = if (lastVisiblePosition >= itemCount) itemCount-1 else lastVisiblePosition
-
-        for (i in firstVisiblePosition..lastVisiblePosition) {
+        for (i in 0 until itemCount) {
             val left = i * viewWidth - horizontalScrollOffset
             val right = left + viewWidth
             val top = 0
