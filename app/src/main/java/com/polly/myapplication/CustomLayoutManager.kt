@@ -3,6 +3,7 @@ package com.polly.myapplication
 import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.RecyclerView.*
 
 
@@ -58,10 +59,9 @@ class CustomLayoutManager(resources: Resources, private val screenWidth: Int) : 
         val h: Double = recyclerViewHeight - viewWidth.toDouble()
         val radius: Double = ( h*h + s*s ) / (h*2)
 
-        val xScreenFraction = viewCentreX.toDouble() / screenWidth.toDouble()
-        val beta = Math.acos(s / radius)
+        val cosAlpha = (s - viewCentreX) / radius
+        val alpha = Math.acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
 
-        val alpha = beta + (xScreenFraction * (Math.PI - (2 * beta)))
         val yComponent = radius - (radius * Math.sin(alpha))
         return yComponent.toInt()
     }
