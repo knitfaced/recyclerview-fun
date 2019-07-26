@@ -2,8 +2,8 @@ package com.polly.myapplication
 
 import android.content.res.Resources
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.RecyclerView.*
-import java.lang.Math.PI
 
 class CustomLayoutManager5(resources: Resources, private val screenWidth: Int) : LayoutManager() {
 
@@ -46,10 +46,11 @@ class CustomLayoutManager5(resources: Resources, private val screenWidth: Int) :
         }
     }
 
-    private fun getTopOffsetForView(viewCentre: Double): Int {
+    private fun getTopOffsetForView(viewCentreX: Double): Int {
         val radius = screenWidth / 2
-        val alpha = (viewCentre / screenWidth) * PI
+        val cosAlpha = (radius - viewCentreX) / radius
+        val alpha = Math.acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
         val y = radius - (radius * Math.sin(alpha))
-        return y.toInt() - (viewWidth / 2)
+        return y.toInt()
     }
 }
